@@ -1,7 +1,7 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
+/// //////////////////////////////////////////////
+/// //////////////////////////////////////////////
 // BANKIST APP
 
 // Data
@@ -61,4 +61,24 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const { movements } = account1;
 
+const displayMovements = function (movements, sort) {
+  const display = sort === undefined ? 'afterbegin' : 'beforeend';
+  movements.forEach((movement, i) => {
+    console.log(i + 1, movement);
+    const type = movement > 0 ? 'deposit' : 'withdrawal';
+    const html = `<div class="movements__row">
+      <div class="movements__type movements__type--${type}">${type}</div>
+      <div class="movements__date">3 days ago</div>
+      <div class="movements__value">${movement}</div>
+    </div>`;
+    containerMovements.insertAdjacentHTML(`${display}`, html);
+  });
+};
+
+displayMovements(account1.movements);
+btnSort.addEventListener('click', () => {
+  containerMovements.innerHTML = '';
+  displayMovements(account1.movements, 'sort');
+});
